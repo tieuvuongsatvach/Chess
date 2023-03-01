@@ -4,14 +4,19 @@ using UnityEngine;
 
 public class MovePlate : MonoBehaviour
 {
-    [SerializeField] private GameObject controller;
-
     private GameObject reference = null;
+
+    private GameController controller;
 
     private int matrixX;
     private int matrixY;
 
     public bool attack = false;
+
+    private void Awake()
+    {
+        controller = GameController.instance;
+    }
 
     void Start()
     {
@@ -23,27 +28,26 @@ public class MovePlate : MonoBehaviour
 
     private void OnMouseUp()
     {
-        controller = GameObject.FindGameObjectWithTag("GameController");
         if (attack)
         {
-            GameObject gc = controller.GetComponent<GameController>().GetPosition(matrixX, matrixY);
+            GameObject cp = controller.GetPosition(matrixX, matrixY);
 
-            if (gc.name == "white_king") controller.GetComponent<GameController>().Winner("black");
-            if (gc.name == "black_king") controller.GetComponent<GameController>().Winner("white");
+            if (cp.name == "white_king") controller.Winner("black");
+            if (cp.name == "black_king") controller.Winner("white");
 
-            Destroy(gc);
+            Destroy(cp);
         }
 
-        controller.GetComponent<GameController>().SetPositionEmpty(reference.GetComponent<Chess>().GetXBoard(),
+        controller.SetPositionEmpty(reference.GetComponent<Chess>().GetXBoard(),
             reference.GetComponent<Chess>().GetYBoard());
 
         reference.GetComponent<Chess>().SetXBoard(matrixX);
         reference.GetComponent<Chess>().SetYBoard(matrixY);
         reference.GetComponent<Chess>().SetCoords();
 
-        controller.GetComponent<GameController>().SetPosition(reference);
+        controller.SetPosition(reference);
 
-        controller.GetComponent<GameController>().NextTurn();
+        controller.NextTurn();
 
         reference.GetComponent<Chess>().DestroyMovePlates();
     }

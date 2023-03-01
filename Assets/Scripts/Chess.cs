@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Chess : MonoBehaviour
 {
-    //[SerializeField] private GameObject controller;
     [SerializeField] private GameObject movePlate;
     private GameController controller;
 
@@ -16,11 +15,13 @@ public class Chess : MonoBehaviour
     public Sprite black_queen, black_knight, black_bishop, black_king, black_rook, black_pawn;
     public Sprite white_queen, white_knight, white_bishop, white_king, white_rook, white_pawn;
 
+    private void Awake()
+    {
+        controller = GameController.instance;
+    }
+
     public void Activate()
     {
-        //controller = GameObject.FindGameObjectWithTag("GameController");
-        controller = GameController.instance;
-
         SetCoords();
 
         switch (this.name)
@@ -77,7 +78,6 @@ public class Chess : MonoBehaviour
 
     private void OnMouseUp()
     {
-        //if (!controller.GetComponent<GameController>().IsGameover() && controller.GetComponent<GameController>().GetCurrentPlayer() == player)
         if (!controller.IsGameover() && controller.GetCurrentPlayer() == player)
         {
             DestroyMovePlates();
@@ -144,20 +144,17 @@ public class Chess : MonoBehaviour
 
     public void LineMovePlate(int xIncrement, int yIncrement)
     {
-        //GameController gc = controller.GetComponent<GameController>();
-        GameController gc = controller;
-
         int x = xBoard + xIncrement;
         int y = yBoard + yIncrement;
 
-        while (gc.PositionOnBoard(x, y) && gc.GetPosition(x, y) == null)
+        while (controller.PositionOnBoard(x, y) && controller.GetPosition(x, y) == null)
         {
             MovePlateSpawn(x, y);
             x += xIncrement;
             y += yIncrement;
         }
 
-        if (gc.PositionOnBoard(x, y) && gc.GetPosition(x, y).GetComponent<Chess>().player != player)
+        if (controller.PositionOnBoard(x, y) && controller.GetPosition(x, y).GetComponent<Chess>().player != player)
         {
             MovePlateAttackSpawn(x, y);
         }
@@ -189,11 +186,9 @@ public class Chess : MonoBehaviour
 
     public void PointMovePlate(int x, int y)
     {
-        //GameController gc = controller.GetComponent<GameController>();
-        GameController gc = controller;
-        if (gc.PositionOnBoard(x, y))
+        if (controller.PositionOnBoard(x, y))
         {
-            GameObject cp = gc.GetPosition(x, y);
+            GameObject cp = controller.GetPosition(x, y);
 
             if (cp == null)
             {
@@ -208,23 +203,21 @@ public class Chess : MonoBehaviour
 
     public void PawnMovePlate(int x, int y)
     {
-        //GameController gc = controller.GetComponent<GameController>();
-        GameController gc = controller;
-        if (gc.PositionOnBoard(x, y))
+        if (controller.PositionOnBoard(x, y))
         {
-            if (gc.GetPosition(x, y) == null)
+            if (controller.GetPosition(x, y) == null)
             {
                 MovePlateSpawn(x, y);
             }
 
-            if (gc.PositionOnBoard(x + 1, y) && gc.GetPosition(x + 1, y) != null && 
-                gc.GetPosition(x + 1, y).GetComponent<Chess>().player != player)
+            if (controller.PositionOnBoard(x + 1, y) && controller.GetPosition(x + 1, y) != null && 
+                controller.GetPosition(x + 1, y).GetComponent<Chess>().player != player)
             {
                 MovePlateAttackSpawn(x + 1, y);
             }
 
-            if (gc.PositionOnBoard(x - 1, y) && gc.GetPosition(x - 1, y) != null &&
-                gc.GetPosition(x - 1, y).GetComponent<Chess>().player != player)
+            if (controller.PositionOnBoard(x - 1, y) && controller.GetPosition(x - 1, y) != null &&
+                controller.GetPosition(x - 1, y).GetComponent<Chess>().player != player)
             {
                 MovePlateAttackSpawn(x - 1, y);
             }
