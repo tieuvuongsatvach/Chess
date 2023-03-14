@@ -8,13 +8,16 @@ using TMPro;
 public class GameController : MonoBehaviour
 {
     [SerializeField] private GameObject chessPiece;
+    [SerializeField] private TextMeshProUGUI textWin;
+    [SerializeField] private TextMeshProUGUI textRestart;
+    [SerializeField] private Chess chess;
 
     private GameObject[,] positions = new GameObject[8, 8];
     private GameObject[] playerBlack = new GameObject[16];
     private GameObject[] playerWhite = new GameObject[16];
-
     private string currentPlayer = "white";
     private bool gameover = false;
+
 
     public static GameController instance;
 
@@ -114,9 +117,9 @@ public class GameController : MonoBehaviour
     {
         gameover = true;
 
-        GameObject.FindGameObjectWithTag("WinnerText").GetComponent<TextMeshProUGUI>().enabled = true;
-        GameObject.FindGameObjectWithTag("WinnerText").GetComponent<TextMeshProUGUI>().text = $"{playerWinner} is the winner";
+        textWin.enabled = true;
+        textWin.text = $"{playerWinner} is the winner";
 
-        GameObject.FindGameObjectWithTag("RestartText").GetComponent<TextMeshProUGUI>().enabled = true;
+        textRestart.enabled = true;
     }
 }

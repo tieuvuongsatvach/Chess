@@ -5,19 +5,20 @@ using UnityEngine;
 public class Chess : MonoBehaviour
 {
     [SerializeField] private GameObject movePlate;
-    private GameController controller;
 
+    private GameController controller;
     private int xBoard = -1;
     private int yBoard = -1;
-
     private string player;
+    private SpriteRenderer rend;
 
-    public Sprite black_queen, black_knight, black_bishop, black_king, black_rook, black_pawn;
     public Sprite white_queen, white_knight, white_bishop, white_king, white_rook, white_pawn;
+    public Sprite black_queen, black_knight, black_bishop, black_king, black_rook, black_pawn;
 
     private void Awake()
     {
         controller = GameController.instance;
+        rend = this.GetComponent<SpriteRenderer>();
     }
 
     public void Activate()
@@ -26,19 +27,19 @@ public class Chess : MonoBehaviour
 
         switch (this.name)
         {
-            case "black_queen": this.GetComponent<SpriteRenderer>().sprite = black_queen; player = "black"; break;
-            case "black_knight": this.GetComponent<SpriteRenderer>().sprite = black_knight; player = "black"; break;
-            case "black_bishop": this.GetComponent<SpriteRenderer>().sprite = black_bishop; player = "black"; break;
-            case "black_king": this.GetComponent<SpriteRenderer>().sprite = black_king; player = "black"; break;
-            case "black_rook": this.GetComponent<SpriteRenderer>().sprite = black_rook; player = "black"; break;
-            case "black_pawn": this.GetComponent<SpriteRenderer>().sprite = black_pawn; player = "black"; break;
+            case "black_queen": rend.sprite = black_queen; player = "black"; break;
+            case "black_knight": rend.sprite = black_knight; player = "black"; break;
+            case "black_bishop": rend.sprite = black_bishop; player = "black"; break;
+            case "black_king": rend.sprite = black_king; player = "black"; break;
+            case "black_rook": rend.sprite = black_rook; player = "black"; break;
+            case "black_pawn": rend.sprite = black_pawn; player = "black"; break;
 
-            case "white_queen": this.GetComponent<SpriteRenderer>().sprite = white_queen; player = "white"; break;
-            case "white_knight": this.GetComponent<SpriteRenderer>().sprite = white_knight; player = "white"; break;
-            case "white_bishop": this.GetComponent<SpriteRenderer>().sprite = white_bishop; player = "white"; break;
-            case "white_king": this.GetComponent<SpriteRenderer>().sprite = white_king; player = "white"; break;
-            case "white_rook": this.GetComponent<SpriteRenderer>().sprite = white_rook; player = "white"; break;
-            case "white_pawn": this.GetComponent<SpriteRenderer>().sprite = white_pawn; player = "white"; break;
+            case "white_queen": rend.sprite = white_queen; player = "white"; break;
+            case "white_knight": rend.sprite = white_knight; player = "white"; break;
+            case "white_bishop": rend.sprite = white_bishop; player = "white"; break;
+            case "white_king": rend.sprite = white_king; player = "white"; break;
+            case "white_rook": rend.sprite = white_rook; player = "white"; break;
+            case "white_pawn": rend.sprite = white_pawn; player = "white"; break;
         }
     }
 
@@ -209,7 +210,7 @@ public class Chess : MonoBehaviour
             {
                 MovePlateSpawn(x, y);
             }
-
+            
             if (controller.PositionOnBoard(x + 1, y) && controller.GetPosition(x + 1, y) != null && 
                 controller.GetPosition(x + 1, y).GetComponent<Chess>().player != player)
             {
@@ -256,7 +257,7 @@ public class Chess : MonoBehaviour
         GameObject mp = Instantiate(movePlate, new Vector3(x, y, -3.0f), Quaternion.identity);
 
         MovePlate mpScript = mp.GetComponent<MovePlate>();
-        mpScript.attack = true;
+        mpScript.SetAttack();
         mpScript.SetReference(gameObject);
         mpScript.SetCoords(matrixX, matrixY);
     }

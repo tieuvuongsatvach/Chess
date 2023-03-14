@@ -547,7 +547,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0.22746193}
-  m_AnchoredPosition: {x: 0, y: -4.5999756}
+  m_AnchoredPosition: {x: 0, y: -4.5998535}
   m_SizeDelta: {x: -122, y: 11}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1222211109
@@ -692,6 +692,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chessPiece: {fileID: 2502996375184110299, guid: e67234d42b44eee4daece2a005d684c5, type: 3}
+  textWin: {fileID: 938775865}
+  textRestart: {fileID: 1222211109}
+  chess: {fileID: -5819150734291030182, guid: e67234d42b44eee4daece2a005d684c5, type: 3}
 --- !u!1 &1796913762
 GameObject:
   m_ObjectHideFlags: 0

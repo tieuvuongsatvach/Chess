@@ -98,8 +98,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e8a2eb9a0f006d46a1de187558c3c98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 0}
-  attack: 0
+  chess: {fileID: -5819150734291030182, guid: e67234d42b44eee4daece2a005d684c5, type: 3}
+  rend: {fileID: 7253246556898985749}
 --- !u!61 &5383668741415801257
 BoxCollider2D:
   m_ObjectHideFlags: 0

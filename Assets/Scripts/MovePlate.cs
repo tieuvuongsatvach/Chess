@@ -5,24 +5,25 @@ using UnityEngine;
 public class MovePlate : MonoBehaviour
 {
     private GameObject reference = null;
-
     private GameController controller;
-
     private int matrixX;
     private int matrixY;
+    private bool attack = false;
+    private Chess chess;
 
-    public bool attack = false;
+    [SerializeField] private SpriteRenderer rend;
 
     private void Awake()
     {
         controller = GameController.instance;
+        rend = gameObject.GetComponent<SpriteRenderer>();
     }
 
     void Start()
     {
         if (attack)
         {
-            gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 0f, 0f, 1f);
+            rend.color = new Color(1f, 0f, 0f, 1f);
         }
     }
 
@@ -37,19 +38,19 @@ public class MovePlate : MonoBehaviour
 
             Destroy(cp);
         }
+        chess = reference.GetComponent<Chess>();
 
-        controller.SetPositionEmpty(reference.GetComponent<Chess>().GetXBoard(),
-            reference.GetComponent<Chess>().GetYBoard());
+        controller.SetPositionEmpty(chess.GetXBoard(), chess.GetYBoard());
 
-        reference.GetComponent<Chess>().SetXBoard(matrixX);
-        reference.GetComponent<Chess>().SetYBoard(matrixY);
-        reference.GetComponent<Chess>().SetCoords();
+        chess.SetXBoard(matrixX);
+        chess.SetYBoard(matrixY);
+        chess.SetCoords();
 
         controller.SetPosition(reference);
 
         controller.NextTurn();
 
-        reference.GetComponent<Chess>().DestroyMovePlates();
+        chess.DestroyMovePlates();
     }
 
     public void SetCoords(int x, int y)
@@ -66,5 +67,10 @@ public class MovePlate : MonoBehaviour
     public GameObject GetReference()
     {
         return reference;
+    }
+
+    public void SetAttack()
+    {
+        attack = true;
     }
 }
